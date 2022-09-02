@@ -1,11 +1,13 @@
-//@ts-nocheck
-import { useState, useCallback, useMemo, memo } from "react";
-import Input from "../Input";
+import React, { useState, useCallback, useMemo, memo, ChangeEvent, FocusEvent } from "react";
+import Input from "../../../../components/Elements/Input";
+import { Props } from '../../models';
 
-const FormControlled = ({ schemaForm, initValueForm }) => {
+
+
+const FormControlled: React.FC<Props> = ({ schemaForm, initValueForm }) => {
 
   const [form, setForm] = useState(initValueForm);
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<{ [key: string]: any }>({});
   const { userName, email, password, confirmPw } = schemaForm;
 
   const isDisabled = useMemo(() => {
@@ -17,7 +19,7 @@ const FormControlled = ({ schemaForm, initValueForm }) => {
   }, [form, errors]);
 
   const validateForm = useCallback(
-    (fieldName, newValues) => {
+    (fieldName: string, newValues: any) => {
       const currentSchema = schemaForm[fieldName];
       const {
         regex,
@@ -43,9 +45,12 @@ const FormControlled = ({ schemaForm, initValueForm }) => {
   );
 
   const handleOnChange = useCallback(
-    (e) => {
-      const { value, name } = e.target;
-      setForm((prevState) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const { value, name }: {
+        value: string;
+        name: string
+      } = e.target;
+      setForm((prevState: any) => {
         const newValues = { ...prevState, [name]: value };
         const messagesForm = validateForm(name, newValues);
         setErrors({ ...errors, ...messagesForm });
@@ -56,9 +61,9 @@ const FormControlled = ({ schemaForm, initValueForm }) => {
   );
 
   const handleOnBlur = useCallback(
-    (e) => {
+    (e: FocusEvent<HTMLInputElement>) => {
       const { value, name } = e.target;
-      setForm((prevState) => {
+      setForm((prevState: any) => {
         const newValues = { ...prevState, [name]: value };
         const messagesForm = validateForm(name, newValues);
         setErrors({ ...errors, ...messagesForm });
@@ -69,7 +74,7 @@ const FormControlled = ({ schemaForm, initValueForm }) => {
   );
 
   const onHandleSubmitForm = useCallback(
-    (e) => {
+    (e: { preventDefault: () => void; }) => {
       e.preventDefault();
       if (isDisabled) {
         return;

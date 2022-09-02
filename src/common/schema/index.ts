@@ -1,0 +1,50 @@
+import {
+  regexEmailFormat,
+  validateEmail,
+  validateConfirmPw,
+  validatePw,
+  validateUser,
+} from '@/utils/validate.util';
+
+export const schemaForm = {
+  userName: {
+    label: 'User Name:',
+    type: 'text',
+    name: 'userName',
+    placeholder: 'User Name...',
+    validator: validateUser,
+    requiredMessage: 'The user name field is required.',
+    errorMessage: 'User Name is at least 5 characters',
+    regex: '',
+  },
+  email: {
+    label: 'Email:',
+    type: 'text',
+    name: 'email',
+    placeholder: 'Email...',
+    validator: validateEmail,
+    requiredMessage: 'The email field is required.',
+    errorMessage: 'An email address must contain a single @.',
+    regex: regexEmailFormat,
+  },
+  password: {
+    label: 'Password:',
+    type: 'password',
+    name: 'password',
+    placeholder: 'Password...',
+    validator: validatePw,
+    requiredMessage: 'The password field is required.',
+    errorMessage: 'Password must be contain at least 8 characters.',
+    regex: '',
+  },
+  confirmPw: {
+    label: 'Confirm Password:',
+    type: 'password',
+    name: 'confirmPw',
+    placeholder: 'Confirm Password...',
+    validator: validateConfirmPw,
+    requiredMessage: 'The confirm password field is required.',
+    errorMessage: 'Confirm password must be same as password',
+    regex: '',
+  },
+};
