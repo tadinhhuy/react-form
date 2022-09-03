@@ -1,6 +1,7 @@
 //@ts-nocheck
 import { useState, useRef, useMemo, useCallback, memo } from "react";
-import Input from "../../../components/Elements/Input";
+import Input from "../../components/Elements/Input";
+import { schemaForm } from '@/common/schema';
 
 const FormUnControlled = ({ schemaForm, initValueForm }) => {
   const [errors, setErrors] = useState();
