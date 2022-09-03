@@ -1,6 +1,6 @@
 import { schemaForm } from '../../common/schema';
 import { Fragment } from 'react';
-import ControlledForm from './components/Controlled';
+import ControlledForm from './components/ControlledForm';
 
 const initValueForm = {
   userName: "",

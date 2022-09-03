@@ -1,11 +1,9 @@
 import React, { useState, useCallback, useMemo, memo, ChangeEvent, FocusEvent } from "react";
-import Input from "../../../../components/Elements/Input";
-import { Props } from '../../models';
+import { FormProps } from '@/models/general';
+import Input from "../../../components/Elements/Input";
 
-
-
-const FormControlled: React.FC<Props> = ({ schemaForm, initValueForm }) => {
-
+const FormControlled: React.FC<FormProps> = ({ schemaForm, initValueForm }) => {
+  
   const [form, setForm] = useState(initValueForm);
   const [errors, setErrors] = useState<{ [key: string]: any }>({});
   const { userName, email, password, confirmPw } = schemaForm;

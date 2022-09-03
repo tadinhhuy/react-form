@@ -1,3 +1,3 @@
-import ControlledPage from "./controlled.page";
+import ControlledPage from './Controlled.page';
 
 export default ControlledPage;
