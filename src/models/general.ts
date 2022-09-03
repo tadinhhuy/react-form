@@ -8,3 +8,16 @@ export interface SchemaField {
   errorMessage: string;
   regex: RegExp | string;
 }
+
+export interface FormProps {
+  schemaForm: {
+    userName: SchemaField;
+    email: SchemaField;
+    password: SchemaField;
+    confirmPw: SchemaField;
+    [key: string]: SchemaField;
+  };
+  initValueForm: {
+    [key: string]: any;
+  };
+}

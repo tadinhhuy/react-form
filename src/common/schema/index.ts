@@ -4,7 +4,7 @@ import {
   validateConfirmPw,
   validatePw,
   validateUser,
-} from '@/utils/validate.util';
+} from '../../utils/validate.util';
 
 export const schemaForm = {
   userName: {
