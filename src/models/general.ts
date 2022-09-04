@@ -7,17 +7,20 @@ export interface SchemaField {
   requiredMessage: string;
   errorMessage: string;
   regex: RegExp | string;
+  [key: string]: any;
 }
 
+export interface SchemaForm<T = SchemaField> {
+  userName: T;
+  email: T;
+  password: T;
+  confirmPw: T;
+  [key: string]: T;
+}
+
+export type FormKey = keyof SchemaForm;
+
 export interface FormProps {
-  schemaForm: {
-    userName: SchemaField;
-    email: SchemaField;
-    password: SchemaField;
-    confirmPw: SchemaField;
-    [key: string]: SchemaField;
-  };
-  initValueForm: {
-    [key: string]: any;
-  };
+  schemaForm: SchemaForm;
+  initValueForm: SchemaForm<string>;
 }
