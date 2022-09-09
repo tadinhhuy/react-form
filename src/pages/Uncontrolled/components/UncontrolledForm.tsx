@@ -1,10 +1,11 @@
 //@ts-nocheck
 import { useState, useRef, useMemo, useCallback, memo } from "react";
-import Input from "../Input";
+import Input from "../../components/Elements/Input";
+import { schemaForm } from '@/common/schema';
 
 const FormUnControlled = ({ schemaForm, initValueForm }) => {
   const [errors, setErrors] = useState();
-  const formRef = useRef({});
+  const formRef = useRef<React.RefObject<HTMLInputElement>>({});
   const keyOfFormFields = Object.keys(initValueForm);
   const { userName, email, password, confirmPw } = schemaForm;
 
@@ -45,7 +46,7 @@ const FormUnControlled = ({ schemaForm, initValueForm }) => {
     }, {});
     console.log("new messages", newMessages);
     return newMessages;
-  }, [formValues, schemaForm, keyOfFormFields, formRef]);
+  }, [formValues, schemaForm, keyOfFormFields]);
 
   const checkValidate = useCallback(() => {
     const values = formValues;
@@ -76,8 +77,9 @@ const FormUnControlled = ({ schemaForm, initValueForm }) => {
       }
       callAPI();
     },
-    [callAPI, checkValidate]
+    [callAPI, checkValidate, validateFormMessage]
   );
+
   return (
     <div style={{ height: "100%" }}>
       Form Uncontrolled:

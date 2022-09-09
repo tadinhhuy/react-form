@@ -1,16 +1,25 @@
-//@ts-nocheck
-import { forwardRef } from "react";
+import { forwardRef, ChangeEvent, FocusEvent, RefObject } from "react";
 
-const Input = forwardRef(
+interface Props {
+  errors: {
+    [key: string]: any;
+  };
+  handleOnBlur: (e: FocusEvent<HTMLInputElement>) => void;
+  handleOnChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  field: { [key: string]: any };
+  form: { [key: string]: any };
+}
+
+const Input: React.FC<Props> = forwardRef(
   (
-    { form, field, handleOnChange = () => {}, handleOnBlur = () => {}, errors },
+    { form, field, handleOnChange = () => { }, handleOnBlur = () => { }, errors },
     ref
   ) => {
     return (
       <>
         <div>{field?.label}</div>
         <input
-          ref={ref}
+          ref={ref as RefObject<HTMLInputElement>}
           placeholder={field?.placeholder}
           name={field?.name}
           type={field?.type}
