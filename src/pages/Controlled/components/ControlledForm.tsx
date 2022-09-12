@@ -30,13 +30,11 @@ const FormControlled: React.FC<FormProps> = ({ schemaForm, initValueForm }) => {
 
   const validateForm = useCallback(
     (fieldName: string, newValues: SchemaForm<string>): { [fieldName: FormKey]: string } => {
-      console.log('newValues: ', newValues);
       const currentSchema = schemaForm[fieldName];
       const { regex, requiredMessage, errorMessage, validator, name } = currentSchema;
 
       const { password: passwordValue } = newValues;
       const currentValue = newValues[fieldName];
-      console.log('currentValue: ', currentValue);
 
       const currentParams =
         name === 'confirmPw'
@@ -88,7 +86,7 @@ const FormControlled: React.FC<FormProps> = ({ schemaForm, initValueForm }) => {
       if (isDisabled) {
         return;
       }
-      console.log('submited', form);
+      console.log('submitted', form);
       setForm(initValueForm);
       setErrors(initErrors);
     },
@@ -98,15 +96,7 @@ const FormControlled: React.FC<FormProps> = ({ schemaForm, initValueForm }) => {
   return (
     <div>
       Form Controlled:
-      <form
-        style={{
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-        onSubmit={onHandleSubmitForm}
-      >
+      <form onSubmit={onHandleSubmitForm}>
         <div style={{ padding: '15px 0' }}>
           <Input
             field={userName}
@@ -147,7 +137,7 @@ const FormControlled: React.FC<FormProps> = ({ schemaForm, initValueForm }) => {
           Submit
         </button>
       </form>
-    </div>
+    </div >
   );
 };
 
