@@ -5,17 +5,12 @@ export const regexPwFormat = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
 
 export const regexNumber = /^[0-9]*$/;
 
-export const validateEmail = ({
-  email,
-  requiredMsg,
-  errMsg,
-  regex,
-}: {
-  email: string;
-  requiredMsg: string;
-  errMsg: string;
-  regex: RegExp;
-}) => {
+export const validateEmail = (
+  email: string,
+  requiredMsg: string,
+  errMsg: string,
+  regex: RegExp
+) => {
   const isValidEmail = regex?.test(email?.toLowerCase());
   if (email?.trim()?.length > 0 && !isValidEmail) {
     return errMsg;
@@ -26,15 +21,7 @@ export const validateEmail = ({
   return null;
 };
 
-export const validateUser = ({
-  userName,
-  requiredMsg,
-  errMsg,
-}: {
-  userName: string;
-  requiredMsg: string;
-  errMsg: string;
-}): string => {
+export const validateUser = (userName: string, requiredMsg: string, errMsg: string): string => {
   if (!userName?.trim()) {
     return requiredMsg;
   }
@@ -44,15 +31,7 @@ export const validateUser = ({
   return '';
 };
 
-export const validatePw = ({
-  password,
-  requiredMsg,
-  errMsg,
-}: {
-  password: string;
-  requiredMsg: string;
-  errMsg: string;
-}): string => {
+export const validatePw = (password: string, requiredMsg: string, errMsg: string): string => {
   if (!password?.trim()) {
     return requiredMsg;
   }
@@ -62,17 +41,12 @@ export const validatePw = ({
   return '';
 };
 
-export const validateConfirmPw = ({
-  password,
-  confirmPw,
-  requiredMsg,
-  errMsg,
-}: {
-  password: string;
-  confirmPw: string;
-  requiredMsg: string;
-  errMsg: string;
-}) => {
+export const validateConfirmPw = (
+  password: string,
+  confirmPw: string,
+  requiredMsg: string,
+  errMsg: string
+) => {
   if (!confirmPw?.trim()) {
     return requiredMsg;
   }
