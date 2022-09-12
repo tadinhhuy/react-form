@@ -1,25 +1,22 @@
-import { forwardRef, ChangeEvent, FocusEvent, RefObject } from "react";
+import { FormKey, SchemaForm } from '@/models/general';
+import { forwardRef, ChangeEvent, FocusEvent, ForwardedRef } from 'react';
+import { ErrorText } from './Input.style';
 
 interface Props {
-  errors: {
-    [key: string]: any;
-  };
   handleOnBlur: (e: FocusEvent<HTMLInputElement>) => void;
   handleOnChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  field: { [key: string]: any };
-  form: { [key: string]: any };
+  errors: SchemaForm<string>;
+  field: { [key in FormKey]: any };
+  form: SchemaForm<string>;
 }
 
-const Input: React.FC<Props> = forwardRef(
-  (
-    { form, field, handleOnChange = () => { }, handleOnBlur = () => { }, errors },
-    ref
-  ) => {
+const Input: React.FC<Props> = forwardRef<HTMLInputElement, Props>(
+  ({ form, field, handleOnChange = () => { }, handleOnBlur = () => { }, errors }, ref: ForwardedRef<HTMLInputElement>) => {
     return (
       <>
         <div>{field?.label}</div>
         <input
-          ref={ref as RefObject<HTMLInputElement>}
+          ref={ref}
           placeholder={field?.placeholder}
           name={field?.name}
           type={field?.type}
@@ -28,15 +25,9 @@ const Input: React.FC<Props> = forwardRef(
           value={form && form[field?.name]}
         />
         {errors && errors[field?.name] && (
-          <div
-            style={{
-              color: "red",
-              fontSize: "12px",
-              position: "absolute"
-            }}
-          >
+          <ErrorText>
             {errors[field?.name]}
-          </div>
+          </ErrorText>
         )}
       </>
     );
