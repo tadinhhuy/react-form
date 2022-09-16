@@ -1,18 +1,20 @@
-import styled from 'styled-components'
-
+import styled from 'styled-components';
+import { Outlet } from 'react-router-dom';
 
 const Container = styled.div`
+  margin: 10px;
   display: flex;
   justify-content: center;
 `;
 
-interface Props {
-  children: JSX.Element
-}
+interface Props { }
 
-const ContentLayout: React.FC<Props> = ({ children }) => {
-  return <Container>{children}</Container>
-}
-
+const ContentLayout: React.FC<Props> = () => {
+  return (
+    <Container>
+      <Outlet />
+    </Container>
+  );
+};
 
 export default ContentLayout;
