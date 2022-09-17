@@ -3,15 +3,16 @@ import { forwardRef, ChangeEvent, FocusEvent, ForwardedRef } from 'react';
 import { ErrorText } from './Input.style';
 
 interface Props {
-  handleOnBlur: (e: FocusEvent<HTMLInputElement>) => void;
-  handleOnChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  errors: SchemaForm<string>;
-  field: { [key in FormKey]: any };
-  form: SchemaForm<string>;
+  handleOnBlur?: (e: FocusEvent<HTMLInputElement>) => void;
+  handleOnChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  errors?: SchemaForm<string>;
+  field?: { [key in FormKey]: any };
+  form?: SchemaForm<string>;
 }
 
-const Input: React.FC<Props> = forwardRef<HTMLInputElement, Props>(
+const Input = forwardRef<HTMLInputElement, Props>(
   ({ form, field, handleOnChange = () => { }, handleOnBlur = () => { }, errors }, ref: ForwardedRef<HTMLInputElement>) => {
+    console.log('ref: ', ref);
     return (
       <>
         <div>{field?.label}</div>
