@@ -12,7 +12,6 @@ interface Props {
 
 const Input = forwardRef<HTMLInputElement, Props>(
   ({ form, field, handleOnChange = () => { }, handleOnBlur = () => { }, errors }, ref: ForwardedRef<HTMLInputElement>) => {
-    console.log('ref: ', ref);
     return (
       <>
         <div>{field?.label}</div>
