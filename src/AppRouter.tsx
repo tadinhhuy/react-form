@@ -1,18 +1,24 @@
+import { lazy, Suspense } from 'react';
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
-import ContentLayout from './components/Layout/Content.layout';
-import ControlledPage from './pages/Controlled';
-import UncontrolledPage from './pages/Uncontrolled';
+
+const ContentLayout = lazy(() => import('./components/Layout/Content.layout'));
+const ControlledPage = lazy(() => import('./pages/Controlled'));
+const UncontrolledPage = lazy(() => import('./pages/Uncontrolled'));
+const Page404 = lazy(() => import('./pages/404'));
 
 const AppRouter = () => {
   return (
     <>
       <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<ContentLayout />}>
-            <Route path="/controlled" element={<ControlledPage />} />
-            <Route path="/uncontrolled" element={<UncontrolledPage />} />
-          </Route>
-        </Routes>
+        <Suspense fallback={<>Loading page...</>}>
+          <Routes>
+            <Route path="/" element={<ContentLayout />}>
+              <Route path="controlled" element={<ControlledPage />} />
+              <Route path="uncontrolled" element={<UncontrolledPage />} />
+              <Route path="*" element={<Page404 />} />
+            </Route>
+          </Routes>
+        </Suspense>
       </BrowserRouter>
     </>
   );
