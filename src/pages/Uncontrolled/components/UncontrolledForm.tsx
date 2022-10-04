@@ -1,25 +1,37 @@
-//@ts-nocheck
-import { useState, useRef, useMemo, useCallback, memo } from "react";
-import Input from "../../components/Elements/Input";
-import { schemaForm } from '@/common/schema';
+import React, { useState, useRef, useMemo, useCallback, memo, FormEvent } from "react";
+import Input from '../../../components/Elements/Input';
+import { FormProps, SchemaForm } from '@/models/general';
 
-const FormUnControlled = ({ schemaForm, initValueForm }) => {
-  const [errors, setErrors] = useState();
-  const formRef = useRef<React.RefObject<HTMLInputElement>>({});
+const FormUnControlled: React.FC<FormProps> = ({ schemaForm, initValueForm }) => {
+  const [errors, setErrors] = useState<SchemaForm<string>>();
+  const userNameRef = useRef<HTMLInputElement | null>(null);
+  const emailRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+  const confirmPwRef = useRef<HTMLInputElement | null>(null);
+
   const keyOfFormFields = Object.keys(initValueForm);
   const { userName, email, password, confirmPw } = schemaForm;
+
+  const formRef: { [key: string]: any } = useMemo(() => {
+    return {
+      userName: userNameRef,
+      email: emailRef,
+      password: passwordRef,
+      confirmPw: confirmPwRef
+    }
+  }, []);
 
   const formValues = useMemo(() => {
     const values = keyOfFormFields.reduce((accumulator, key) => {
       return {
         ...accumulator,
-        [key]: formRef?.current[key]?.value
+        [key]: formRef?.[key]?.current?.value
       };
     }, {});
-    return values;
-  }, [keyOfFormFields, formRef]);
+    return values as SchemaForm;
+  }, [formRef, keyOfFormFields]);
 
-  const validateFormMessage = useCallback(() => {
+  const validateFormMessage = useCallback((): SchemaForm<string> => {
     const newMessages = keyOfFormFields.reduce((accumulator, currentKey) => {
       const {
         regex,
@@ -37,19 +49,19 @@ const FormUnControlled = ({ schemaForm, initValueForm }) => {
           ? [passwordValue, currentValue, requiredMessage, errorMessage, regex]
           : [currentValue, requiredMessage, errorMessage, regex];
 
-      const messages = validator(...currentParams);
+      const messages: string = validator(...currentParams);
 
       return {
         ...accumulator,
         [currentKey]: messages
       };
     }, {});
-    console.log("new messages", newMessages);
-    return newMessages;
+    return newMessages as SchemaForm<string>;
   }, [formValues, schemaForm, keyOfFormFields]);
 
   const checkValidate = useCallback(() => {
     const values = formValues;
+    console.log('values: ', values);
 
     const areInvalidFields = keyOfFormFields.every(
       (field) => !values[field]?.trim()
@@ -62,22 +74,17 @@ const FormUnControlled = ({ schemaForm, initValueForm }) => {
     return areInvalidFields || areInvalidErrors;
   }, [formValues, keyOfFormFields, errors]);
 
-  const callAPI = useCallback(() => {
-    console.log("Call API...", formValues);
-  }, [formValues]);
-
   const onHandleSubmitForm = useCallback(
-    (e) => {
+    (e: FormEvent) => {
       e.preventDefault();
-      console.log("validateFormMessage", validateFormMessage());
       if (checkValidate()) {
         const messagesErrors = validateFormMessage();
         setErrors(messagesErrors);
         return;
       }
-      callAPI();
+      console.log("Call API...", formValues);
     },
-    [callAPI, checkValidate, validateFormMessage]
+    [checkValidate, formValues, validateFormMessage]
   );
 
   return (
@@ -95,29 +102,29 @@ const FormUnControlled = ({ schemaForm, initValueForm }) => {
         <div style={{ padding: "15px 0" }}>
           <Input
             field={userName}
-            errors={errors}
-            ref={(el) => (formRef.current[userName?.name] = el)}
+            errors={errors as SchemaForm<string>}
+            ref={userNameRef}
           />
         </div>
         <div style={{ padding: "15px 0" }}>
           <Input
             field={email}
-            errors={errors}
-            ref={(el) => (formRef.current[email?.name] = el)}
+            errors={errors as SchemaForm<string>}
+            ref={emailRef}
           />
         </div>
         <div style={{ padding: "15px 0" }}>
           <Input
             field={password}
-            errors={errors}
-            ref={(el) => (formRef.current[password?.name] = el)}
+            errors={errors as SchemaForm<string>}
+            ref={passwordRef}
           />
         </div>
         <div style={{ padding: "15px 0" }}>
           <Input
             field={confirmPw}
-            errors={errors}
-            ref={(el) => (formRef.current[confirmPw?.name] = el)}
+            errors={errors as SchemaForm<string>}
+            ref={confirmPwRef}
           />
         </div>
         <button style={{ alignSelf: "center", marginTop: "25px" }}>
