@@ -57,8 +57,8 @@ const FormControlled: React.FC<FormProps> = ({ schemaForm, initValueForm }) => {
         value: string;
         name: string;
       } = e.target;
-      setForm((prevState: SchemaForm<string>) => {
-        const newValues = { ...prevState, [name]: value };
+      setForm((prevForm: SchemaForm<string>) => {
+        const newValues = { ...prevForm, [name]: value };
         const messagesForm: { [fieldName: FormKey]: string } = validateForm(name, newValues);
         setErrors({ ...errors, ...messagesForm } as SchemaForm<string>);
         return newValues;
@@ -137,7 +137,7 @@ const FormControlled: React.FC<FormProps> = ({ schemaForm, initValueForm }) => {
           Submit
         </button>
       </form>
-    </div >
+    </div>
   );
 };
 
